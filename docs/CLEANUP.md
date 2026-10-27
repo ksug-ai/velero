@@ -9,7 +9,7 @@
 Use the **same project, cluster, zone, region, bucket, and service-account settings** used for deployment. The live rehearsal used `us-central1-c`; the defaults in `setenv.sh` use `us-central1-f`. A wrong zone is rejected if the cluster exists in another zone.
 
 ```bash
-export MY_PROJECT_ID=your-project-id
+export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
 export MY_ZONE=us-central1-c
 ./cleanup.sh                        # Read-only cloud inventory; writes cleanup-report.json
 ./cleanup.sh --apply                # Show scope, then require project/cluster confirmation

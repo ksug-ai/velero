@@ -31,7 +31,7 @@ PostgreSQL's live data directory is deliberately ephemeral. This keeps the demon
 
 ## Prerequisites
 
-Use Google Cloud Shell or Bash on a machine with `gcloud`, `kubectl`, the GKE auth plugin, and the **Velero v1.18.1 CLI** on `PATH`. Install the CLI for your OS and architecture from the [Velero releases](https://github.com/velero-io/velero/releases/tag/v1.18.1). Scripts do not install local tools or use sudo.
+Use Google Cloud Shell or Bash with `gcloud`, `kubectl`, the GKE auth plugin, `curl`, `tar`, and Python 3. Scripts automatically download the pinned **Velero v1.18.1 CLI** from the [official release](https://github.com/velero-io/velero/releases/tag/v1.18.1), verify its SHA-256 against the release CHECKSUM file, and cache it in the ignored `.tools/` directory. No sudo or shell PATH changes are required. An existing matching CLI on PATH is reused. For manual CLI commands, use `./velero.sh`, for example `./velero.sh backup get`. The server and node-agent are installed separately by `velero-deploy.sh` (also run by `setup.sh`).
 
 You need a billing-enabled Google Cloud project, quota for the cluster and disks, and permission to enable APIs, create GKE clusters and buckets, manage the demo service account and IAM bindings, and administer Kubernetes resources. The default VPC must exist. Cloud resources incur charges.
 
@@ -40,7 +40,7 @@ You need a billing-enabled Google Cloud project, quota for the cluster and disks
 From this repository:
 
 ```bash
-export MY_PROJECT_ID=your-project-id
+export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
 # Optional: override MY_CLUSTER, MY_REGION, MY_ZONE, MY_BUCKET in your shell.
 # If changing the region, also choose a zone within that region.
 ./setup.sh
@@ -50,14 +50,15 @@ kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 Open http://localhost:8080 (or Cloud Shell Web Preview on port 8080). Upload `ai-app/sample-docs/recovery-plan.md`, then ask **"What is the recovery passphrase?"**. You should see `nebula-orchid-42` in the answer. Leave the app idle while backing up in a second terminal:
 
 ```bash
-export MY_PROJECT_ID=your-project-id
-./demo.sh backup demo-01
-./demo.sh verify
+export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
+./demo.sh backup demo-01 && ./demo.sh verify demo-01
 ```
 
-`setup.sh` creates the configured cluster or reconnects to an existing running cluster in the same zone, deploys PostgreSQL, builds **and deploys** Aurora, and installs Velero. It stops on failure before printing success. You still need the prerequisite CLIs installed and valid cloud permissions/quota.
+`setup.sh` creates the configured cluster or reconnects to an existing running cluster in the same zone, deploys PostgreSQL, builds **and deploys** Aurora, and installs Velero. It stops on failure before printing success. You still need the other prerequisite CLIs installed and valid cloud permissions/quota.
 
 For individual steps, run `./createsa.sh`, `./gke-deploy.sh` (new clusters only), `./postgresql-deploy.sh`, `./ai-app/build-and-push.sh`, and `./velero-deploy.sh` in that order. The build script now deploys automatically; there is no command to copy from its output. Use `./ai-app/build-and-push.sh --build-only` only when you intentionally want an image without a deployment.
+
+`demo.sh verify BACKUP_NAME` first requires a completed backup and completed backups of both volumes, then checks local app/checkpoint consistency. It does not prove a restore occurred. `demo.sh restore BACKUP_NAME` performs the actual recovery and then verifies it. A failed backup must never be followed by namespace deletion.
 
 The build script uses Cloud Build and Artifact Registry and incurs build/storage charges. Your build identity needs permission to push images, and the GKE node identity needs Artifact Registry Reader access to the repository. Reusing an image is supported: set `AI_APP_IMAGE` to an existing pushed image before `./setup.sh` to skip the build, or run `./ai-app-deploy.sh` to deploy only that image. No image is built or pushed automatically during a restore.
 
@@ -74,6 +75,7 @@ Continue with [the presenter runbook](LAB_GUIDE.md) for the deletion, restore, s
 
 | File | Purpose |
 | --- | --- |
+| `velero.sh` | Run the pinned CLI without installing it on your shell PATH |
 | `setup.sh` | Provision or reconnect, deploy PostgreSQL and Aurora, then install Velero |
 | `cleanup.sh` | Preview, remove, and verify all dedicated demo resources |
 | `setenv.sh` | Overridable demo defaults |

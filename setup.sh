@@ -2,12 +2,10 @@
 # KSUG.AI: one command for the GKE + Aurora + Velero demo.
 source "$(dirname "$0")/scripts/common.sh"
 [[ $# -eq 0 ]] || { echo 'Usage: ./setup.sh (configure via setenv.sh environment overrides)' >&2; exit 1; }
-for tool in gcloud kubectl velero; do
+for tool in gcloud kubectl; do
   command -v "$tool" >/dev/null || { echo "Missing required tool: $tool. See README.md prerequisites." >&2; exit 1; }
 done
-velero version --client-only | grep -F "Version: $VELERO_VERSION" >/dev/null || {
-  echo "Install Velero CLI $VELERO_VERSION before setup (see README.md)." >&2; exit 1;
-}
+ensure_velero
 "$ROOT/createsa.sh"
 cluster_info=$(gcloud container clusters list --project "$MY_PROJECT_ID" --filter="name=$MY_CLUSTER" --format='value(location,status)')
 if [[ -z "$cluster_info" ]]; then

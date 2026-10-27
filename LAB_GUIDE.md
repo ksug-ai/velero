@@ -9,7 +9,7 @@ Follow the README quick start: `./setup.sh` deploys the whole demo, including th
 ```bash
 kubectl get nodes
 kubectl -n velero get pods
-velero backup-location get
+./velero.sh backup-location get
 kubectl -n velero-demo get pods,pvc
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
@@ -29,11 +29,11 @@ cat manifests/postgresql.yaml
 cat manifests/ai-app.yaml
 cat velero-schedule.yaml
 ./demo.sh backup demo-01
-velero backup describe demo-01 --details
+./velero.sh backup describe demo-01 --details
 kubectl -n velero get podvolumebackups
 ```
 
-Use a new backup name on every run. Before deletion, check that the backup phase and its PodVolumeBackup are `Completed`, with no hook or volume errors. `demo.sh backup` requires a completed backup and completed backups for the `backup` and `documents` volumes. Run `./demo.sh verify` after backup to check the checkpoint before deletion.
+Use a new backup name on every run. Before deletion, check that the backup phase and its PodVolumeBackup are `Completed`, with no hook or volume errors. `demo.sh backup` requires a completed backup and completed backups for the `backup` and `documents` volumes. Run `./demo.sh verify demo-01` after backup to check the completed backup and local checkpoint before deletion. This checks backup readiness and app consistency; the restore step below is the proof of recovery.
 
 ## 3. Simulate application loss
 
@@ -53,10 +53,10 @@ The script asks you to type the configured cluster name. The namespace lookup sh
 The script refuses to restore over an existing demo namespace. It waits for the Velero restore to complete, waits for PostgreSQL, imports the recovered dump, and verifies the original rows, document file checksums, document catalog, and complete conversation history against the saved checkpoint. It does not run the seed command. Show the restore details as supporting evidence:
 
 ```bash
-velero restore get
-velero restore describe RESTORE_NAME --details
+./velero.sh restore get
+./velero.sh restore describe RESTORE_NAME --details
 kubectl -n velero get podvolumerestores
-./demo.sh verify
+./demo.sh verify demo-01
 ```
 
 The old port-forward ends when the namespace is deleted. Start it again:
@@ -74,9 +74,9 @@ A restored pod alone is not proof of recovery. Neither the restore script nor th
 The installer applies an hourly schedule in UTC with 24-hour retention. Each scheduled backup also runs the dump and app checkpoint hooks. Upload a document and ask a question before the first scheduled run. Keep the app idle during scheduled runs as well; do not overlap manual and scheduled backups. Trigger it immediately instead of waiting for the next hour:
 
 ```bash
-velero schedule get
-velero backup create scheduled-demo-01 --from-schedule postgres-hourly --wait
-velero backup describe scheduled-demo-01 --details
+./velero.sh schedule get
+./velero.sh backup create scheduled-demo-01 --from-schedule postgres-hourly --wait
+./velero.sh backup describe scheduled-demo-01 --details
 ```
 
 Deleting the application also removes the namespace targeted by the schedule. Restore promptly, and inspect scheduled backups for failures before relying on them.
@@ -85,7 +85,7 @@ Deleting the application also removes the namespace targeted by the schedule. Re
 
 - Wrong context: reconnect using the exact project, zone, and cluster from `setenv.sh`.
 - Bucket unavailable: inspect `velero backup-location get` and `kubectl -n velero logs deployment/velero`. Check the bucket IAM binding, annotated `velero` service account, and GKE workload pool. IAM propagation can take time; retry after it settles.
-- Backup fails: use `velero backup logs BACKUP_NAME` and `velero backup describe BACKUP_NAME --details`. A failing `pg_dump` must stop the backup; never delete the namespace after a failed or partially failed backup.
+- Backup fails: use `./velero.sh backup logs BACKUP_NAME` and `./velero.sh backup describe BACKUP_NAME --details`. A failing `pg_dump` must stop the backup; never delete the namespace after a failed or partially failed backup.
 - Volume backup/restore stalls: inspect node-agent logs and `podvolumebackups` / `podvolumerestores` in the Velero namespace. File system backup requires node access to pod volumes, so this setup targets GKE Standard, not Autopilot.
 - App image pull fails: ensure the image tag exists and the GKE node identity has Artifact Registry Reader access.
 - Recovery checkpoint mismatch: compare document PVC contents and the restored database. Check whether someone uploaded or chatted during backup. Do not reseed to hide a failed recovery.
@@ -98,7 +98,7 @@ Deleting the application also removes the namespace targeted by the schedule. Re
 Use the automated teardown after the demo. It removes the cluster, labeled disks, backup bucket, image repository, exact demo build artifacts, and the Velero service account, then verifies the result.
 
 ```bash
-export MY_PROJECT_ID=your-project-id
+export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
 export MY_ZONE=us-central1-c  # Match the zone you actually deployed
 ./cleanup.sh
 ./cleanup.sh --apply
