@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 source "$(dirname "$0")/scripts/common.sh"
 require_context
-command -v velero >/dev/null
-velero version --client-only | grep -F "Version: $VELERO_VERSION" >/dev/null || {
-  echo "Install Velero CLI $VELERO_VERSION (see README.md)." >&2; exit 1;
-}
+ensure_velero
 if ! gcloud storage buckets describe "gs://$MY_BUCKET" --project "$MY_PROJECT_ID" >/dev/null 2>&1; then
   gcloud storage buckets create "gs://$MY_BUCKET" --project "$MY_PROJECT_ID" --location "$MY_REGION" --uniform-bucket-level-access
 fi

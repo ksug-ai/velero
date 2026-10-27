@@ -16,3 +16,12 @@ confirm() {
   read -r -p "$1 Type $MY_CLUSTER to continue: " answer
   [[ "$answer" == "$MY_CLUSTER" ]] || exit 1
 }
+
+ensure_velero() {
+  if command -v velero >/dev/null 2>&1 && velero version --client-only 2>/dev/null | grep -F "Version: $VELERO_VERSION" >/dev/null; then
+    return
+  fi
+  local cli
+  cli=$("$ROOT/scripts/install-velero-cli.sh")
+  export PATH="$(dirname "$cli"):$PATH"
+}

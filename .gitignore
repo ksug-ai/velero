@@ -13,3 +13,6 @@ __pycache__/
 
 # Per-run cloud cleanup inventory
 cleanup-report*.json
+
+# Downloaded local Velero CLI
+.tools/

@@ -38,7 +38,7 @@ The restore completed with zero errors and warning categories for missing option
 Set the project and zone to the values used when creating your cluster:
 
 ```bash
-export MY_PROJECT_ID=your-project-id
+export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
 export MY_ZONE=us-central1-c
 source ./setenv.sh
 gcloud container clusters get-credentials "$MY_CLUSTER" --project "$MY_PROJECT_ID" --zone "$MY_ZONE"
