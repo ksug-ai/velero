@@ -1,0 +1,13 @@
+digraph restore {
+ graph [rankdir=TB, bgcolor="#ffffff", pad="0.3", nodesep="0.5", ranksep="0.4", fontname="Arial"];
+ node [shape=box, style="rounded,filled", fillcolor="#eef3ff", color="#365fff", fontcolor="#152b36", fontname="Arial", fontsize=17, margin="0.3,0.18", width=6];
+ edge [color="#64748b", arrowsize=0.8];
+ start [label="1. Start restore\ndemo.sh restore BACKUP_NAME"];
+ resources [label="2. Recreate Kubernetes resources\nNamespace, workloads, Services, Secrets, and PVCs"];
+ volumes [label="3. Recover both volumes from GCS\nDocument files + checkpoint, and PostgreSQL dump", fillcolor="#e9faf5", color="#159579"];
+ startup [label="4. Start the recovered application\nVelero init containers wait for volume recovery"];
+ database [label="5. Import the database dump\ndemo.sh runs pg_restore"];
+ verify [label="6. Prove recovery\nCompare document checksums, catalog, and chat history", fillcolor="#e9faf5", color="#159579"];
+ browser [label="7. Reconnect the browser\nShow the original document and conversation"];
+ start -> resources -> volumes -> startup -> database -> verify -> browser;
+}

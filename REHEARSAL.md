@@ -1,4 +1,6 @@
-# Cloud rehearsal: 27 October 2026
+[![KSUG.AI](ai-app/static/ksug-ai-logo.png)](https://ksug.ai)
+
+# KSUG.AI · Cloud rehearsal: 27 October 2026
 
 The merged AI recovery demo was exercised on a real one-node GKE Standard cluster.
 

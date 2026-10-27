@@ -1,0 +1,42 @@
+flowchart LR
+    User["Presenter / browser"]
+    Model["Optional Ollama endpoint<br/>Not deployed by this demo"]
+
+    subgraph GKE["KSUG.AI demo · GKE Standard · one worker node"]
+        direction TB
+        subgraph AppNS["Namespace: velero-demo"]
+            App["KSUG.AI Aurora AI<br/>Document Q&A UI + API"]
+            Docs[("Document PVC<br/>Uploaded files + recovery checkpoint")]
+            DB["PostgreSQL<br/>Document catalog + conversations<br/>Live PGDATA is ephemeral"]
+            Dump[("Backup PVC<br/>Logical database dump")]
+            App -->|Read / write files| Docs
+            App -->|Read / write metadata and chat| DB
+            DB -->|Pre-backup hook: pg_dump| Dump
+        end
+        subgraph BackupNS["Namespace: velero"]
+            Trigger["Manual backup or hourly schedule"]
+            Velero["Velero server<br/>GCP plugin"]
+            Agent["Velero node-agent<br/>Kopia file system backup"]
+            Trigger --> Velero
+            Velero -->|Coordinate volume backups| Agent
+        end
+        K8s["Kubernetes API<br/>Deployments, Services, Secrets, PVC specs"]
+        K8s -->|Resource definitions| Velero
+        Docs -->|File contents| Agent
+        Dump -->|Dump file| Agent
+    end
+
+    GCS[("Google Cloud Storage<br/>Outside the cluster<br/>Resources + both volume backups")]
+    User -->|Local kubectl port-forward| App
+    App -.->|Optional generated answers| Model
+    Velero -->|Kubernetes resource backup| GCS
+    Agent -->|Volume data backup| GCS
+
+    classDef app fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef data fill:#ecfdf5,stroke:#059669,color:#064e3b
+    classDef backup fill:#f3e8ff,stroke:#9333ea,color:#581c87
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569
+    class App,DB,K8s app
+    class Docs,Dump,GCS data
+    class Trigger,Velero,Agent backup
+    class Model optional

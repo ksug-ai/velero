@@ -1,0 +1,37 @@
+digraph architecture {
+  graph [rankdir=LR, bgcolor="#ffffff", pad="0.3", nodesep="0.4", ranksep="0.7", fontname="Arial", fontsize=18, compound=true];
+  node [shape=box, style="rounded,filled", fillcolor="#eef3ff", color="#365fff", fontname="Arial", fontsize=15, margin="0.18,0.13", fontcolor="#152b36"];
+  edge [color="#64748b", fontname="Arial", fontsize=11, fontcolor="#475569", arrowsize=0.8];
+  browser [label="Presenter / browser", fillcolor="#f8fafc", color="#94a3b8"];
+  model [label="Optional Ollama\nModel service outside backup scope", style="rounded,dashed", color="#94a3b8"];
+  subgraph cluster_gke {
+    label="GKE STANDARD · ONE WORKER NODE"; color="#c8d4ee"; style="rounded"; fontcolor="#365fff";
+    subgraph cluster_app {
+      label="velero-demo namespace"; color="#d9e2f1"; fontcolor="#475569";
+      app [label="Aurora AI by KSUG.AI\nDocument Q&A UI + API"];
+      docs [label="Document PVC\nUploaded files + recovery checkpoint", shape=cylinder, fillcolor="#e9faf5", color="#159579"];
+      db [label="PostgreSQL\nCatalog + conversation history\nLive PGDATA is ephemeral"];
+      dump [label="Backup PVC\nConsistent database dump", shape=cylinder, fillcolor="#e9faf5", color="#159579"];
+      app -> docs [label="Files"];
+      app -> db [label="Metadata + chat"];
+      db -> dump [label="Pre-backup hook: pg_dump"];
+    }
+    subgraph cluster_velero {
+      label="velero namespace"; color="#ddd3f1"; fontcolor="#6f42a8";
+      trigger [label="Manual backup / hourly schedule", fillcolor="#f5edff", color="#9465ca"];
+      server [label="Velero server\nGCP plugin", fillcolor="#f5edff", color="#9465ca"];
+      agent [label="Velero node-agent\nKopia file system backup", fillcolor="#f5edff", color="#9465ca"];
+      trigger -> server;
+      server -> agent [label="Coordinates"];
+    }
+    resources [label="Kubernetes API\nDeployments, Services, Secrets, PVC specs"];
+    resources -> server [label="Resource definitions"];
+    docs -> agent [label="File contents"];
+    dump -> agent [label="Dump file"];
+  }
+  gcs [label="GOOGLE CLOUD STORAGE\nOutside the cluster\nResources + both volume backups", shape=cylinder, fillcolor="#e9faf5", color="#159579", penwidth=2];
+  browser -> app [label="Local port-forward"];
+  app -> model [label="Optional generated answers", style=dashed, constraint=false];
+  server -> gcs [label="Kubernetes resource backup"];
+  agent -> gcs [label="Volume data backup"];
+}

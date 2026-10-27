@@ -1,4 +1,6 @@
-# Presenter runbook: recover the AI assistant
+[![KSUG.AI](ai-app/static/ksug-ai-logo.png)](https://ksug.ai)
+
+# KSUG.AI · Presenter runbook: recover the AI assistant
 
 ## 1. Prepare before presenting
 
@@ -17,6 +19,8 @@ Open http://localhost:8080. Upload `ai-app/sample-docs/recovery-plan.md` and ask
 Expected: ready PostgreSQL and AI assistant pods, two bound PVCs, an available backup location, an uploaded document, and a saved conversation. Do not redeploy or seed the application after deleting it during the restore demonstration.
 
 ## 2. Explain the backup path
+
+Show the [architecture diagram](README.md#architecture) before running the backup. Use the [restore sequence](docs/ARCHITECTURE.md#restore-sequence) to explain what will happen after namespace deletion.
 
 Kubernetes resources describe the application. A database-aware pre-backup hook produces a consistent `pg_dump`. The node-agent copies the dump PVC and the AI document PVC to GCS. An app hook stores a checkpoint of document hashes and conversation history. A Kubernetes YAML backup alone would not recover the rows. This demo uses file system backup, with cloud disk snapshots disabled; it does not demonstrate CSI snapshots, point-in-time recovery, or recovery to a different cluster.
 

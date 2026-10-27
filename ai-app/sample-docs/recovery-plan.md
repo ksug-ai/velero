@@ -1,6 +1,8 @@
-# Aurora AI recovery plan
+[![KSUG.AI](../../ai-app/static/ksug-ai-logo.png)](https://ksug.ai)
 
-Aurora AI is our internal document assistant. Its knowledge documents live on a Kubernetes persistent volume. Its document catalog and conversation history live in PostgreSQL.
+# KSUG.AI Aurora AI recovery plan
+
+KSUG.AI Aurora AI is our internal document assistant. Its knowledge documents live on a Kubernetes persistent volume. Its document catalog and conversation history live in PostgreSQL.
 
 The recovery passphrase is nebula-orchid-42. This is a fictional demo marker, not a credential. Seeing this phrase after recovery proves that the uploaded knowledge document returned.
 
