@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-documents
+  namespace: velero-demo
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-settings
+  namespace: velero-demo
+data:
+  ANSWER_MODE: extractive
+  OLLAMA_URL: http://ollama:11434
+  OLLAMA_MODEL: llama3.2:1b
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-assistant
+  namespace: velero-demo
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ai-assistant
+  template:
+    metadata:
+      labels:
+        app: ai-assistant
+      annotations:
+        backup.velero.io/backup-volumes: documents
+        pre.hook.backup.velero.io/container: ai-assistant
+        pre.hook.backup.velero.io/command: '["python", "recovery.py", "checkpoint"]'
+        pre.hook.backup.velero.io/on-error: Fail
+        pre.hook.backup.velero.io/timeout: 60s
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+      containers:
+        - name: ai-assistant
+          image: AI_APP_IMAGE_PLACEHOLDER
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: ai-settings
+          env:
+            - name: PGHOST
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_PASSWORD
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 384Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+          volumeMounts:
+            - name: documents
+              mountPath: /documents
+      volumes:
+        - name: documents
+          persistentVolumeClaim:
+            claimName: ai-documents
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-assistant
+  namespace: velero-demo
+spec:
+  selector:
+    app: ai-assistant
+  ports:
+    - port: 8080
+      targetPort: 8080

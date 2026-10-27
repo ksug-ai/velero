@@ -1,4 +1,5 @@
-echo '-------Destroy a PostgreSQL sample database'
-
-helm uninstall postgres -n yong-postgresql --wait
-kubectl delete namespace yong-postgresql
+#!/usr/bin/env bash
+source "$(dirname "$0")/scripts/common.sh"
+require_context
+confirm 'Delete the velero-demo namespace and its database volumes?'
+kubectl delete namespace velero-demo --wait=true

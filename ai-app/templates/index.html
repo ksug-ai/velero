@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aurora AI · Recovery lab</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main>
+<header><span class="eyebrow">VELERO RECOVERY LAB</span><h1>Aurora AI</h1><p>Your team's knowledge. Ready to recover.</p><span id="mode" class="badge">Connecting…</span></header>
+<div class="layout"><aside class="card"><h2>Knowledge library</h2><p>Upload a text or Markdown document, then ask a question about it.</p><form id="upload"><input id="file" name="file" type="file" accept=".txt,.md" required><button>Upload document</button></form><ul id="documents"></ul><div class="note"><strong>What survives?</strong><p>Velero recovers these documents and the conversation history stored in PostgreSQL.</p></div></aside>
+<section class="card"><h2>Ask your documents</h2><div id="history" aria-live="polite"></div><form id="chat"><label for="question">Question</label><textarea id="question" maxlength="2000" placeholder="What is the recovery passphrase?" required></textarea><button>Ask Aurora</button></form></section></div><p id="status" role="status"></p><footer>Demo environment · Pause uploads and questions while a backup runs.</footer>
+</main><script src="/static/app.js"></script></body></html>

@@ -1,4 +1,12 @@
-casa-sa-key.json
-bucket*
+# Local config and credentials
+.env
+.env.*
+credentials-velero*
+*-key.json
 yongsa4*
-velero
+bucket4velero*
+.DS_Store
+
+__pycache__/
+*.pyc
+.venv/
