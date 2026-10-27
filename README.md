@@ -41,9 +41,13 @@ From this repository:
 
 ```bash
 export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
+printf '\n'
+
 # Optional: override MY_CLUSTER, MY_REGION, MY_ZONE, MY_BUCKET in your shell.
 # If changing the region, also choose a zone within that region.
 ./setup.sh
+printf '\n'
+
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
 
@@ -51,7 +55,11 @@ Open http://localhost:8080 (or Cloud Shell Web Preview on port 8080). Upload `ai
 
 ```bash
 export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
-./demo.sh backup demo-01 && ./demo.sh verify demo-01
+printf '\n'
+
+./demo.sh backup demo-01 &&
+  printf '\n' &&
+  ./demo.sh verify demo-01
 ```
 
 `setup.sh` creates the configured cluster or reconnects to an existing running cluster in the same zone, deploys PostgreSQL, builds **and deploys** Aurora, and installs Velero. It stops on failure before printing success. You still need the other prerequisite CLIs installed and valid cloud permissions/quota.
@@ -66,6 +74,8 @@ Use a globally unique bucket name dedicated to this demo. Keep the same environm
 
 ```bash
 source ./setenv.sh
+printf '\n'
+
 gcloud container clusters get-credentials "$MY_CLUSTER" --project "$MY_PROJECT_ID" --zone "$MY_ZONE"
 ```
 
@@ -100,6 +110,8 @@ Backups of the database and document PVC are separate operations. Pause uploads 
 
 ```bash
 ./cleanup.sh          # Preview using your deployment environment settings
+printf '\n'
+
 ./cleanup.sh --apply  # Confirm and remove the dedicated demo resources
 ```
 

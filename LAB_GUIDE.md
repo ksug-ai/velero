@@ -9,12 +9,16 @@ Follow the README quick start: `./setup.sh` deploys the whole demo, including th
 ```bash
 kubectl get nodes
 printf '\n'
+
 kubectl -n velero get pods
 printf '\n'
+
 ./velero.sh backup-location get
 printf '\n'
+
 kubectl -n velero-demo get pods,pvc
 printf '\n'
+
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
 
@@ -30,10 +34,20 @@ Kubernetes resources describe the application. A database-aware pre-backup hook 
 
 ```bash
 cat manifests/postgresql.yaml
+printf '\n'
+
 cat manifests/ai-app.yaml
+printf '\n'
+
 cat velero-schedule.yaml
+printf '\n'
+
 ./demo.sh backup demo-01
+printf '\n'
+
 ./velero.sh backup describe demo-01 --details
+printf '\n'
+
 kubectl -n velero get podvolumebackups
 ```
 
@@ -43,6 +57,8 @@ Use a new backup name on every run. Before deletion, check that the backup phase
 
 ```bash
 ./postgresql-destroy.sh
+printf '\n'
+
 kubectl get namespace velero-demo
 ```
 
@@ -58,8 +74,14 @@ The script refuses to restore over an existing demo namespace. It waits for the 
 
 ```bash
 ./velero.sh restore get
+printf '\n'
+
 ./velero.sh restore describe RESTORE_NAME --details
+printf '\n'
+
 kubectl -n velero get podvolumerestores
+printf '\n'
+
 ./demo.sh verify demo-01
 ```
 
@@ -79,7 +101,11 @@ The installer applies an hourly schedule in UTC with 24-hour retention. Each sch
 
 ```bash
 ./velero.sh schedule get
+printf '\n'
+
 ./velero.sh backup create scheduled-demo-01 --from-schedule postgres-hourly --wait
+printf '\n'
+
 ./velero.sh backup describe scheduled-demo-01 --details
 ```
 
@@ -88,7 +114,7 @@ Deleting the application also removes the namespace targeted by the schedule. Re
 ## Troubleshooting
 
 - Wrong context: reconnect using the exact project, zone, and cluster from `setenv.sh`.
-- Bucket unavailable: inspect `velero backup-location get` and `kubectl -n velero logs deployment/velero`. Check the bucket IAM binding, annotated `velero` service account, and GKE workload pool. IAM propagation can take time; retry after it settles.
+- Bucket unavailable: inspect `./velero.sh backup-location get` and `kubectl -n velero logs deployment/velero`. Check the bucket IAM binding, annotated `velero` service account, and GKE workload pool. IAM propagation can take time; retry after it settles.
 - Backup fails: use `./velero.sh backup logs BACKUP_NAME` and `./velero.sh backup describe BACKUP_NAME --details`. A failing `pg_dump` must stop the backup; never delete the namespace after a failed or partially failed backup.
 - Volume backup/restore stalls: inspect node-agent logs and `podvolumebackups` / `podvolumerestores` in the Velero namespace. File system backup requires node access to pod volumes, so this setup targets GKE Standard, not Autopilot.
 - App image pull fails: ensure the image tag exists and the GKE node identity has Artifact Registry Reader access.
@@ -103,8 +129,14 @@ Use the automated teardown after the demo. It removes the cluster, labeled disks
 
 ```bash
 export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
+printf '\n'
+
 export MY_ZONE=us-central1-c  # Match the zone you actually deployed
+printf '\n'
+
 ./cleanup.sh
+printf '\n'
+
 ./cleanup.sh --apply
 ```
 

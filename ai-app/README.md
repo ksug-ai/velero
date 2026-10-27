@@ -10,8 +10,14 @@ From the repository root, first deploy PostgreSQL, then build and deploy the app
 
 ```bash
 export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
+printf '\n'
+
 ./postgresql-deploy.sh
+printf '\n'
+
 ./ai-app/build-and-push.sh
+printf '\n'
+
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
 
@@ -29,7 +35,11 @@ Use an already-running Ollama endpoint reachable **from the app pod**, with a mo
 
 ```bash
 kubectl -n velero-demo patch configmap ai-settings --type merge -p '{"data":{"ANSWER_MODE":"ollama","OLLAMA_URL":"http://YOUR-REACHABLE-OLLAMA:11434","OLLAMA_MODEL":"llama3.2:1b"}}'
+printf '\n'
+
 kubectl -n velero-demo rollout restart deployment/ai-assistant
+printf '\n'
+
 kubectl -n velero-demo rollout status deployment/ai-assistant
 ```
 
@@ -39,6 +49,8 @@ To return to the credential-free rehearsal:
 
 ```bash
 kubectl -n velero-demo patch configmap ai-settings --type merge -p '{"data":{"ANSWER_MODE":"extractive"}}'
+printf '\n'
+
 kubectl -n velero-demo rollout restart deployment/ai-assistant
 ```
 
@@ -50,11 +62,23 @@ Use Python 3.12+ and a local PostgreSQL instance. Create the `demo` database fir
 
 ```bash
 python3 -m venv .venv
+printf '\n'
+
 .venv/bin/pip install -r ai-app/requirements.txt
+printf '\n'
+
 mkdir -p /tmp/aurora-documents
+printf '\n'
+
 export PGHOST=127.0.0.1 PGDATABASE=demo PGUSER=postgres
+printf '\n'
+
 export PGPASSWORD=your-local-demo-password
+printf '\n'
+
 export DOCUMENT_DIR=/tmp/aurora-documents
+printf '\n'
+
 .venv/bin/flask --app ai-app/app.py run --port 8080
 ```
 
