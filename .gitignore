@@ -10,3 +10,6 @@ bucket4velero*
 __pycache__/
 *.pyc
 .venv/
+
+# Per-run cloud cleanup inventory
+cleanup-report*.json

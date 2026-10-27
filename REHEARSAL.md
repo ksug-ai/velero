@@ -45,8 +45,16 @@ gcloud container clusters get-credentials "$MY_CLUSTER" --project "$MY_PROJECT_I
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
 
-Open http://127.0.0.1:8080. A port-forward must be restarted after namespace deletion. The tested setup left the restored app and hourly schedule running for further rehearsal; follow the lab cleanup instructions when finished to stop charges.
+Open http://127.0.0.1:8080. A port-forward must be restarted after namespace deletion. The app and hourly schedule were left running after the recovery rehearsal, then removed during the automated cleanup rehearsal below. Recreate the demo before using these reconnect commands again.
 
 ## Remaining limits
 
 Ollama-generated answers, cross-cluster recovery, production hardening, and recovery under concurrent writes were not tested. Keep the app idle during a backup. The local behavior suite still uses mocked database calls; the cloud rehearsal separately covered the real PostgreSQL dump/import and HTTP app workflow.
+
+## Automated cleanup rehearsal
+
+On 27 October 2026, `cleanup.sh --apply --yes` removed the dedicated GKE cluster, remaining labeled disks, live backup bucket, Artifact Registry repository, exact Cloud Build source generations, and Velero service account. The final apply verification found no targeted live resources, including no GKE-named compute/network leftovers. The script supports a read-only preview and reruns after partial cleanup.
+
+The actual run exposed Google's ambiguous response when describing a deleted service account and an alternate GCS 404 format; absence checks now use the service-account collection and recognize the observed GCS missing-object responses while preserving real permission errors. The local suite has 25 passing tests covering app behavior, CLI guards, and cleanup safety.
+
+The shared build bucket retained two soft-deleted source archives (31,702 bytes total), with recorded expiry on 3 November 2026. Previously soft-deleted backup versions also remain under their original retention. Shared build buckets, completed build history, provider-managed logs, and unrelated project resources were preserved. See [automated cleanup](docs/CLEANUP.md) for billing and retention boundaries.
