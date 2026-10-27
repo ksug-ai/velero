@@ -75,6 +75,7 @@ Continue with [the presenter runbook](LAB_GUIDE.md) for the deletion, restore, s
 
 | File | Purpose |
 | --- | --- |
+| `cleanup.sh` | Preview, remove, and verify all dedicated demo resources |
 | `setenv.sh` | Overridable demo defaults |
 | `createsa.sh` | Enable required Google Cloud APIs (legacy filename) |
 | `gke-{deploy,destroy}.sh` | Create or delete the exact configured cluster |
@@ -92,6 +93,15 @@ Continue with [the presenter runbook](LAB_GUIDE.md) for the deletion, restore, s
 See [ai-app/README.md](ai-app/README.md) for Ollama configuration, local development, and tests. No model weights or external model service are required for the default demo.
 
 Backups of the database and document PVC are separate operations. Pause uploads and questions during a backup, including scheduled runs, to keep the demo checkpoint consistent. This lab does not implement a distributed write freeze. A restore verification fails if the recovered catalog, files, or conversation history disagree.
+
+## Cleanup after the demo
+
+```bash
+./cleanup.sh          # Preview using your deployment environment settings
+./cleanup.sh --apply  # Confirm and remove the dedicated demo resources
+```
+
+Keep `MY_PROJECT_ID`, `MY_ZONE`, and other overrides set to the deployment values. See [automated cleanup](docs/CLEANUP.md) for scope, unattended use, retention limits, and verification reports.
 
 ## References
 

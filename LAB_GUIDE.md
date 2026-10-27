@@ -95,31 +95,15 @@ Deleting the application also removes the namespace targeted by the schedule. Re
 
 ## Cleanup
 
-These commands mutate your cloud environment; run them yourself when finished. Namespace and cluster deletion require a typed confirmation. Velero uninstall retains the GCS backups and IAM identity.
+Use the automated teardown after the demo. It removes the cluster, labeled disks, backup bucket, image repository, exact demo build artifacts, and the Velero service account, then verifies the result.
 
 ```bash
-./postgresql-destroy.sh
-./velero-destroy.sh
-./gke-destroy.sh
+export MY_PROJECT_ID=your-project-id
+export MY_ZONE=us-central1-c  # Match the zone you actually deployed
+./cleanup.sh
+./cleanup.sh --apply
 ```
 
-Deleting the cluster also removes in-cluster Velero, so the uninstall step is optional. The namespace deletion removes the AI app and documents too. Artifact Registry images and Cloud Build artifacts remain outside the cluster. Check for leftover disks in Google Cloud after deletion. Scripts do not scan for or delete unrelated disks.
+The first command previews the scope. The second requires a typed project/cluster confirmation and permanently deletes the demo backups as well. For unattended runs, use `./cleanup.sh --apply --yes`.
 
-When you no longer need the backups, explicitly remove the dedicated bucket and service account. This permanently deletes backup data; verify the displayed names first. No bucket retention policy or versioning is configured by these scripts.
-
-```bash
-source ./setenv.sh
-printf 'Project: %s\nBucket: %s\nService account: %s\n' "$MY_PROJECT_ID" "$MY_BUCKET" "$MY_GSA_NAME@$MY_PROJECT_ID.iam.gserviceaccount.com"
-gcloud storage rm --recursive "gs://$MY_BUCKET"
-gcloud iam service-accounts delete "$MY_GSA_NAME@$MY_PROJECT_ID.iam.gserviceaccount.com" --project "$MY_PROJECT_ID"
-```
-
-The original scripts may have created other buckets, keys, IAM roles, or clusters under different names. Review those separately if you previously ran that version; the new scripts do not discover or remove them.
-
-The image repository is deliberately retained so older backups can still start their referenced image. After all rehearsals and backups are no longer needed, you can delete this demo's entire image repository:
-
-```bash
-gcloud artifacts repositories delete velero-demo --location "$MY_REGION" --project "$MY_PROJECT_ID"
-```
-
-Review Cloud Build source/log storage separately in Google Cloud; it can be shared with other builds in the project.
+See [the cleanup guide](docs/CLEANUP.md) for resource scope, reruns, JSON reports, retained build artifacts, and billing limits. The older `gke-destroy.sh` and `velero-destroy.sh` scripts only remove their named components; they do not perform the full teardown.
