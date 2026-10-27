@@ -1,10 +1,22 @@
-# Recover an AI assistant with Velero
+[![KSUG.AI](ai-app/static/ksug-ai-logo.png)](https://ksug.ai)
+
+# KSUG.AI · Recover an AI assistant with Velero
 
 A presentation and hands-on demo of Velero on Google Kubernetes Engine (GKE), protecting a small document Q&A assistant backed by PostgreSQL and Google Cloud Storage (GCS) backups.
 
 Upload a knowledge document, ask a question, back up the application, delete its namespace, and restore the documents and conversation history. An hourly schedule demonstrates automation.
 
-The app is called **Aurora AI**. Its default rehearsal mode returns matching document excerpts, with no model or API key required. Optionally connect an Ollama model for generated answers. The UI clearly identifies the active mode.
+The app is called **KSUG.AI Aurora AI**. Its default rehearsal mode returns matching document excerpts, with no model or API key required. Optionally connect an Ollama model for generated answers. The UI clearly identifies the active mode.
+
+## Architecture
+
+[![KSUG.AI architecture: Aurora AI, PostgreSQL, Velero, and GCS](docs/diagrams/architecture.png)](https://ksug.ai)
+
+[Download SVG](docs/diagrams/architecture.svg) · [Download PNG](docs/diagrams/architecture.png)
+
+The backup contains **Kubernetes resources, uploaded documents, and a PostgreSQL dump**. GCS keeps that data outside the cluster. Restore recreates the resources and both volumes, then `demo.sh` imports the database dump and verifies the recovered files and conversation history.
+
+Velero uses GKE Workload Identity to access GCS. Pause uploads and questions while a backup runs. See [the restore sequence and architecture notes](docs/ARCHITECTURE.md) for the detailed flow. [Editable diagram sources](docs/diagrams/README.md).
 
 ## Demo design
 

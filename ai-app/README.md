@@ -1,4 +1,6 @@
-# Aurora AI demo app
+[![KSUG.AI](../ai-app/static/ksug-ai-logo.png)](https://ksug.ai)
+
+# KSUG.AI Aurora AI demo app
 
 A small document Q&A app for showing recovery of knowledge documents and conversations. Text and Markdown files live on a PVC. The document catalog and conversation history live in PostgreSQL. No embedding service or vector database is required.
 

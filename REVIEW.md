@@ -1,4 +1,6 @@
-# Repository review and cleanup
+[![KSUG.AI](ai-app/static/ksug-ai-logo.png)](https://ksug.ai)
+
+# KSUG.AI · Repository review and cleanup
 
 ## Findings addressed
 
@@ -24,6 +26,6 @@ The deployment scripts configure billed resources and IAM bindings. They were re
 
 ## AI application demo
 
-Added Aurora AI, a small document Q&A app, in place of the inherited command-injection app. It stores uploaded UTF-8 documents on a PVC, records catalog metadata and conversations in PostgreSQL, and supports a clearly labeled extractive rehearsal mode or an optional Ollama model. It uses a ClusterIP service with local port-forward access, not a public load balancer. The app checkpoint and dump hooks allow recovery verification without generating replacement data.
+Added KSUG.AI Aurora AI, a small document Q&A app, in place of the inherited command-injection app. It stores uploaded UTF-8 documents on a PVC, records catalog metadata and conversations in PostgreSQL, and supports a clearly labeled extractive rehearsal mode or an optional Ollama model. It uses a ClusterIP service with local port-forward access, not a public load balancer. The app checkpoint and dump hooks allow recovery verification without generating replacement data.
 
 The two volume backups do not form an atomic distributed snapshot: keep the application idle during backups. Checkpoint verification detects inconsistent recovery. The app has no authentication or tenant isolation and is only for a private demo. Model availability, weights, and external service state are outside the backup scope. App deployment requires an image available to GKE; restored backups still depend on that image remaining in the registry.

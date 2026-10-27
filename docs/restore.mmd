@@ -1,0 +1,22 @@
+sequenceDiagram
+    actor Presenter
+    participant Velero as Velero server
+    participant GCS as GCS backup bucket
+    participant K8s as Kubernetes API
+    participant Agent as Node-agent / Kopia
+    participant PG as PostgreSQL
+    participant App as KSUG.AI Aurora AI
+
+    Presenter->>Velero: demo.sh restore BACKUP_NAME
+    Velero->>GCS: Read backed-up resource definitions
+    Velero->>K8s: Recreate namespace, workloads, and PVCs
+    Note over K8s,Agent: New disks are provisioned for the restored PVCs
+    Velero->>Agent: Restore the two backed-up volumes
+    GCS->>Agent: Document files, checkpoint, and database dump
+    Agent->>K8s: Write recovered volume contents
+    Note over K8s,App: Velero restore-wait init containers gate application startup
+    Velero-->>Presenter: Restore Completed
+    Presenter->>PG: demo.sh runs pg_restore from the dump PVC
+    Presenter->>App: Verify document checksums and saved history
+    App-->>Presenter: Recovered state matches backup checkpoint
+    Presenter->>App: Reconnect port-forward and view original conversation

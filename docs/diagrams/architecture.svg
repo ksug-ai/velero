@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="588" viewBox="0 0 1600 588.0053908355795" role="img" aria-labelledby="title description"><title id="title">KSUG.AI · Protect an AI assistant with Velero</title><desc id="description">Application architecture &amp; backup flow. GKE Workload Identity grants GCS access · Pause app writes during backups · File system backup, no disk snapshots</desc><rect width="100%" height="100%" fill="#ffffff" /><a href="https://ksug.ai" aria-label="Visit KSUG.AI"><image x="40" y="24" width="156" height="130" href="data:image/png;base64,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" /></a><text x="230" y="54" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#365fff">KSUG.AI · VELERO RECOVERY LAB</text><text x="230" y="98" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#152b36">Protect an AI assistant with Velero</text><text x="230" y="132" font-family="Arial,sans-serif" font-size="20" fill="#64748b">Application architecture &amp; backup flow</text><path d="M40 167 H1560" stroke="#dbe3f0" stroke-width="2" /><g transform="translate(40.0 180) scale(0.6828391734052112)"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(21.6 473.6)">
+<title>architecture</title>
+<polygon fill="#ffffff" stroke="none" points="-21.6,21.6 -21.6,-473.6 2204.62,-473.6 2204.62,21.6 -21.6,21.6" />
+<g id="clust1" class="cluster">
+<title>cluster_gke</title>
+<path fill="#ffffff" stroke="#c8d4ee" d="M448.42,-8C448.42,-8 1782.6,-8 1782.6,-8 1788.6,-8 1794.6,-14 1794.6,-20 1794.6,-20 1794.6,-432 1794.6,-432 1794.6,-438 1788.6,-444 1782.6,-444 1782.6,-444 448.42,-444 448.42,-444 442.42,-444 436.42,-438 436.42,-432 436.42,-432 436.42,-20 436.42,-20 436.42,-14 442.42,-8 448.42,-8" />
+<text xml:space="preserve" text-anchor="middle" x="1115.51" y="-422.9" font-family="Arial" font-size="18.00" fill="#365fff">GKE STANDARD · ONE WORKER NODE</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_app</title>
+<path fill="#ffffff" stroke="#d9e2f1" d="M456.42,-16C456.42,-16 1474.43,-16 1474.43,-16 1480.43,-16 1486.43,-22 1486.43,-28 1486.43,-28 1486.43,-226 1486.43,-226 1486.43,-232 1480.43,-238 1474.43,-238 1474.43,-238 456.42,-238 456.42,-238 450.42,-238 444.42,-232 444.42,-226 444.42,-226 444.42,-28 444.42,-28 444.42,-22 450.42,-16 456.42,-16" />
+<text xml:space="preserve" text-anchor="middle" x="965.42" y="-216.9" font-family="Arial" font-size="18.00" fill="#475569">velero-demo namespace</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_velero</title>
+<path fill="#ffffff" stroke="#ddd3f1" d="M812.09,-246C812.09,-246 1774.6,-246 1774.6,-246 1780.6,-246 1786.6,-252 1786.6,-258 1786.6,-258 1786.6,-333 1786.6,-333 1786.6,-339 1780.6,-345 1774.6,-345 1774.6,-345 812.09,-345 812.09,-345 806.09,-345 800.09,-339 800.09,-333 800.09,-333 800.09,-258 800.09,-258 800.09,-252 806.09,-246 812.09,-246" />
+<text xml:space="preserve" text-anchor="middle" x="1293.35" y="-323.9" font-family="Arial" font-size="18.00" fill="#6f42a8">velero namespace</text>
+</g>
+
+<g id="node1" class="node">
+<title>browser</title>
+<path fill="#f8fafc" stroke="#94a3b8" d="M200.67,-129.36C200.67,-129.36 66.75,-129.36 66.75,-129.36 60.75,-129.36 54.75,-123.36 54.75,-117.36 54.75,-117.36 54.75,-104.64 54.75,-104.64 54.75,-98.64 60.75,-92.64 66.75,-92.64 66.75,-92.64 200.67,-92.64 200.67,-92.64 206.67,-92.64 212.67,-98.64 212.67,-104.64 212.67,-104.64 212.67,-117.36 212.67,-117.36 212.67,-123.36 206.67,-129.36 200.67,-129.36" />
+<text xml:space="preserve" text-anchor="middle" x="133.71" y="-105.75" font-family="Arial" font-size="15.00" fill="#152b36">Presenter / browser</text>
+</g>
+
+<g id="node3" class="node">
+<title>app</title>
+<path fill="#eef3ff" stroke="#365fff" d="M629.84,-138.36C629.84,-138.36 464.42,-138.36 464.42,-138.36 458.42,-138.36 452.42,-132.36 452.42,-126.36 452.42,-126.36 452.42,-95.64 452.42,-95.64 452.42,-89.64 458.42,-83.64 464.42,-83.64 464.42,-83.64 629.84,-83.64 629.84,-83.64 635.84,-83.64 641.84,-89.64 641.84,-95.64 641.84,-95.64 641.84,-126.36 641.84,-126.36 641.84,-132.36 635.84,-138.36 629.84,-138.36" />
+<text xml:space="preserve" text-anchor="middle" x="547.13" y="-114.75" font-family="Arial" font-size="15.00" fill="#152b36">Aurora AI by KSUG.AI</text>
+<text xml:space="preserve" text-anchor="middle" x="547.13" y="-96.75" font-family="Arial" font-size="15.00" fill="#152b36">Document Q&amp;A UI + API</text>
+</g>
+
+<g id="edge9" class="edge">
+<title>browser-&gt;app</title>
+<path fill="none" stroke="#64748b" d="M213.06,-111C278.22,-111 371.47,-111 442.74,-111" />
+<polygon fill="#64748b" stroke="#64748b" points="442.69,-113.8 450.69,-111 442.69,-108.2 442.69,-113.8" />
+<text xml:space="preserve" text-anchor="middle" x="359.92" y="-114.05" font-family="Arial" font-size="11.00" fill="#475569">Local port-forward</text>
+</g>
+
+<g id="node2" class="node">
+<title>model</title>
+<path fill="none" stroke="#94a3b8" stroke-dasharray="5,2" d="M255.42,-63.36C255.42,-63.36 12,-63.36 12,-63.36 6,-63.36 0,-57.36 0,-51.36 0,-51.36 0,-20.64 0,-20.64 0,-14.64 6,-8.64 12,-8.64 12,-8.64 255.42,-8.64 255.42,-8.64 261.42,-8.64 267.42,-14.64 267.42,-20.64 267.42,-20.64 267.42,-51.36 267.42,-51.36 267.42,-57.36 261.42,-63.36 255.42,-63.36" />
+<text xml:space="preserve" text-anchor="middle" x="133.71" y="-39.75" font-family="Arial" font-size="15.00" fill="#152b36">Optional Ollama</text>
+<text xml:space="preserve" text-anchor="middle" x="133.71" y="-21.75" font-family="Arial" font-size="15.00" fill="#152b36">Model service outside backup scope</text>
+</g>
+
+<g id="edge10" class="edge">
+<title>app-&gt;model</title>
+<path fill="none" stroke="#64748b" stroke-dasharray="5,2" d="M452,-93.84C400.19,-84.4 334.85,-72.48 276.94,-61.93" />
+<polygon fill="#64748b" stroke="#64748b" points="277.58,-59.2 269.21,-60.52 276.58,-64.71 277.58,-59.2" />
+<text xml:space="preserve" text-anchor="middle" x="359.92" y="-91.89" font-family="Arial" font-size="11.00" fill="#475569">Optional generated answers</text>
+</g>
+
+<g id="node4" class="node">
+<title>docs</title>
+<path fill="#e9faf5" stroke="#159579" d="M1066.13,-193.78C1066.13,-197.55 1005.36,-200.62 930.55,-200.62 855.74,-200.62 794.96,-197.55 794.96,-193.78 794.96,-193.78 794.96,-132.22 794.96,-132.22 794.96,-128.45 855.74,-125.38 930.55,-125.38 1005.36,-125.38 1066.13,-128.45 1066.13,-132.22 1066.13,-132.22 1066.13,-193.78 1066.13,-193.78" />
+<path fill="none" stroke="#159579" d="M1066.13,-193.78C1066.13,-190.01 1005.36,-186.94 930.55,-186.94 855.74,-186.94 794.96,-190.01 794.96,-193.78" />
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-166.75" font-family="Arial" font-size="15.00" fill="#152b36">Document PVC</text>
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-148.75" font-family="Arial" font-size="15.00" fill="#152b36">Uploaded files + recovery checkpoint</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>app-&gt;docs</title>
+<path fill="none" stroke="#64748b" d="M641.92,-123.79C685.13,-129.68 737.37,-136.8 785.42,-143.35" />
+<polygon fill="#64748b" stroke="#64748b" points="784.85,-146.1 793.15,-144.4 785.6,-140.55 784.85,-146.1" />
+<text xml:space="preserve" text-anchor="middle" x="705.84" y="-140.05" font-family="Arial" font-size="11.00" fill="#475569">Files</text>
+</g>
+
+<g id="node5" class="node">
+<title>db</title>
+<path fill="#eef3ff" stroke="#365fff" d="M1032.76,-96.36C1032.76,-96.36 828.34,-96.36 828.34,-96.36 822.34,-96.36 816.34,-90.36 816.34,-84.36 816.34,-84.36 816.34,-35.64 816.34,-35.64 816.34,-29.64 822.34,-23.64 828.34,-23.64 828.34,-23.64 1032.76,-23.64 1032.76,-23.64 1038.76,-23.64 1044.76,-29.64 1044.76,-35.64 1044.76,-35.64 1044.76,-84.36 1044.76,-84.36 1044.76,-90.36 1038.76,-96.36 1032.76,-96.36" />
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-72.75" font-family="Arial" font-size="15.00" fill="#152b36">PostgreSQL</text>
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-54.75" font-family="Arial" font-size="15.00" fill="#152b36">Catalog + conversation history</text>
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-36.75" font-family="Arial" font-size="15.00" fill="#152b36">Live PGDATA is ephemeral</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>app-&gt;db</title>
+<path fill="none" stroke="#64748b" d="M641.92,-98.46C691.65,-91.81 753.36,-83.56 806.85,-76.41" />
+<polygon fill="#64748b" stroke="#64748b" points="806.99,-79.21 814.55,-75.38 806.25,-73.66 806.99,-79.21" />
+<text xml:space="preserve" text-anchor="middle" x="705.84" y="-97.55" font-family="Arial" font-size="11.00" fill="#475569">Metadata + chat</text>
+</g>
+
+<g id="node9" class="node">
+<title>agent</title>
+<path fill="#f5edff" stroke="#9465ca" d="M1766.6,-308.36C1766.6,-308.36 1598.93,-308.36 1598.93,-308.36 1592.93,-308.36 1586.93,-302.36 1586.93,-296.36 1586.93,-296.36 1586.93,-265.64 1586.93,-265.64 1586.93,-259.64 1592.93,-253.64 1598.93,-253.64 1598.93,-253.64 1766.6,-253.64 1766.6,-253.64 1772.6,-253.64 1778.6,-259.64 1778.6,-265.64 1778.6,-265.64 1778.6,-296.36 1778.6,-296.36 1778.6,-302.36 1772.6,-308.36 1766.6,-308.36" />
+<text xml:space="preserve" text-anchor="middle" x="1682.76" y="-284.75" font-family="Arial" font-size="15.00" fill="#152b36">Velero node-agent</text>
+<text xml:space="preserve" text-anchor="middle" x="1682.76" y="-266.75" font-family="Arial" font-size="15.00" fill="#152b36">Kopia file system backup</text>
+</g>
+
+<g id="edge7" class="edge">
+<title>docs-&gt;agent</title>
+<path fill="none" stroke="#64748b" d="M1066.48,-171.95C1179.44,-180.93 1344.47,-197.54 1486.43,-225.5 1519.47,-232.01 1555.05,-241.39 1586.67,-250.59" />
+<polygon fill="#64748b" stroke="#64748b" points="1585.56,-253.18 1594.03,-252.75 1587.14,-247.81 1585.56,-253.18" />
+<text xml:space="preserve" text-anchor="middle" x="1376.22" y="-228.55" font-family="Arial" font-size="11.00" fill="#475569">File contents</text>
+</g>
+
+<g id="node6" class="node">
+<title>dump</title>
+<path fill="#e9faf5" stroke="#159579" d="M1478.43,-119.78C1478.43,-123.55 1432.62,-126.62 1376.22,-126.62 1319.82,-126.62 1274.01,-123.55 1274.01,-119.78 1274.01,-119.78 1274.01,-58.22 1274.01,-58.22 1274.01,-54.45 1319.82,-51.38 1376.22,-51.38 1432.62,-51.38 1478.43,-54.45 1478.43,-58.22 1478.43,-58.22 1478.43,-119.78 1478.43,-119.78" />
+<path fill="none" stroke="#159579" d="M1478.43,-119.78C1478.43,-116.01 1432.62,-112.94 1376.22,-112.94 1319.82,-112.94 1274.01,-116.01 1274.01,-119.78" />
+<text xml:space="preserve" text-anchor="middle" x="1376.22" y="-92.75" font-family="Arial" font-size="15.00" fill="#152b36">Backup PVC</text>
+<text xml:space="preserve" text-anchor="middle" x="1376.22" y="-74.75" font-family="Arial" font-size="15.00" fill="#152b36">Consistent database dump</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>db-&gt;dump</title>
+<path fill="none" stroke="#64748b" d="M1045.23,-67.43C1112.54,-71.83 1197.44,-77.38 1264.27,-81.75" />
+<polygon fill="#64748b" stroke="#64748b" points="1263.9,-84.53 1272.06,-82.26 1264.26,-78.94 1263.9,-84.53" />
+<text xml:space="preserve" text-anchor="middle" x="1182.63" y="-83.48" font-family="Arial" font-size="11.00" fill="#475569">Pre-backup hook: pg_dump</text>
+</g>
+
+<g id="edge8" class="edge">
+<title>dump-&gt;agent</title>
+<path fill="none" stroke="#64748b" d="M1451.09,-125.86C1485.5,-143.86 1526.55,-166.56 1561.93,-189.5 1589.38,-207.3 1618.59,-229.52 1641.3,-247.61" />
+<polygon fill="#64748b" stroke="#64748b" points="1639.25,-249.57 1647.25,-252.38 1642.76,-245.2 1639.25,-249.57" />
+<text xml:space="preserve" text-anchor="middle" x="1532.68" y="-192.55" font-family="Arial" font-size="11.00" fill="#475569">Dump file</text>
+</g>
+
+<g id="node7" class="node">
+<title>trigger</title>
+<path fill="#f5edff" stroke="#9465ca" d="M1041.01,-299.36C1041.01,-299.36 820.09,-299.36 820.09,-299.36 814.09,-299.36 808.09,-293.36 808.09,-287.36 808.09,-287.36 808.09,-274.64 808.09,-274.64 808.09,-268.64 814.09,-262.64 820.09,-262.64 820.09,-262.64 1041.01,-262.64 1041.01,-262.64 1047.01,-262.64 1053.01,-268.64 1053.01,-274.64 1053.01,-274.64 1053.01,-287.36 1053.01,-287.36 1053.01,-293.36 1047.01,-299.36 1041.01,-299.36" />
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-275.75" font-family="Arial" font-size="15.00" fill="#152b36">Manual backup / hourly schedule</text>
+</g>
+
+<g id="node8" class="node">
+<title>server</title>
+<path fill="#f5edff" stroke="#9465ca" d="M1421.43,-308.36C1421.43,-308.36 1331.01,-308.36 1331.01,-308.36 1325.01,-308.36 1319.01,-302.36 1319.01,-296.36 1319.01,-296.36 1319.01,-265.64 1319.01,-265.64 1319.01,-259.64 1325.01,-253.64 1331.01,-253.64 1331.01,-253.64 1421.43,-253.64 1421.43,-253.64 1427.43,-253.64 1433.43,-259.64 1433.43,-265.64 1433.43,-265.64 1433.43,-296.36 1433.43,-296.36 1433.43,-302.36 1427.43,-308.36 1421.43,-308.36" />
+<text xml:space="preserve" text-anchor="middle" x="1376.22" y="-284.75" font-family="Arial" font-size="15.00" fill="#152b36">Velero server</text>
+<text xml:space="preserve" text-anchor="middle" x="1376.22" y="-266.75" font-family="Arial" font-size="15.00" fill="#152b36">GCP plugin</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>trigger-&gt;server</title>
+<path fill="none" stroke="#64748b" d="M1053.37,-281C1136.06,-281 1242.2,-281 1309.49,-281" />
+<polygon fill="#64748b" stroke="#64748b" points="1309.2,-283.8 1317.2,-281 1309.2,-278.2 1309.2,-283.8" />
+</g>
+
+<g id="edge5" class="edge">
+<title>server-&gt;agent</title>
+<path fill="none" stroke="#64748b" d="M1433.79,-281C1473.94,-281 1529.03,-281 1577.09,-281" />
+<polygon fill="#64748b" stroke="#64748b" points="1577.08,-283.8 1585.08,-281 1577.08,-278.2 1577.08,-283.8" />
+<text xml:space="preserve" text-anchor="middle" x="1532.68" y="-284.05" font-family="Arial" font-size="11.00" fill="#475569">Coordinates</text>
+</g>
+
+<g id="node11" class="node">
+<title>gcs</title>
+<path fill="#e9faf5" stroke="#159579" stroke-width="2" d="M2183.02,-206.91C2183.02,-211.92 2125.44,-216 2054.56,-216 1983.68,-216 1926.1,-211.92 1926.1,-206.91 1926.1,-206.91 1926.1,-125.09 1926.1,-125.09 1926.1,-120.08 1983.68,-116 2054.56,-116 2125.44,-116 2183.02,-120.08 2183.02,-125.09 2183.02,-125.09 2183.02,-206.91 2183.02,-206.91" />
+<path fill="none" stroke="#159579" stroke-width="2" d="M2183.02,-206.91C2183.02,-201.89 2125.44,-197.81 2054.56,-197.81 1983.68,-197.81 1926.1,-201.89 1926.1,-206.91" />
+<text xml:space="preserve" text-anchor="middle" x="2054.56" y="-178.75" font-family="Arial" font-size="15.00" fill="#152b36">GOOGLE CLOUD STORAGE</text>
+<text xml:space="preserve" text-anchor="middle" x="2054.56" y="-160.75" font-family="Arial" font-size="15.00" fill="#152b36">Outside the cluster</text>
+<text xml:space="preserve" text-anchor="middle" x="2054.56" y="-142.75" font-family="Arial" font-size="15.00" fill="#152b36">Resources + both volume backups</text>
+</g>
+
+<g id="edge11" class="edge">
+<title>server-&gt;gcs</title>
+<path fill="none" stroke="#64748b" d="M1433.84,-274.05C1453.02,-268.95 1472.98,-260.15 1486.43,-245 1511.72,-216.52 1473.95,-185.12 1503.43,-161 1617.57,-67.64 1794.12,-88.71 1916.3,-120.14" />
+<polygon fill="#64748b" stroke="#64748b" points="1915.45,-122.81 1923.9,-122.13 1916.87,-117.39 1915.45,-122.81" />
+<text xml:space="preserve" text-anchor="middle" x="1682.76" y="-117.78" font-family="Arial" font-size="11.00" fill="#475569">Kubernetes resource backup</text>
+</g>
+
+<g id="edge12" class="edge">
+<title>agent-&gt;gcs</title>
+<path fill="none" stroke="#64748b" d="M1773.28,-253.16C1816.24,-239.8 1868.67,-223.5 1916.5,-208.62" />
+<polygon fill="#64748b" stroke="#64748b" points="1917.13,-211.36 1923.93,-206.31 1915.46,-206.01 1917.13,-211.36" />
+<text xml:space="preserve" text-anchor="middle" x="1852.35" y="-243.57" font-family="Arial" font-size="11.00" fill="#475569">Volume data backup</text>
+</g>
+
+<g id="node10" class="node">
+<title>resources</title>
+<path fill="#eef3ff" stroke="#365fff" d="M1079.26,-407.36C1079.26,-407.36 781.84,-407.36 781.84,-407.36 775.84,-407.36 769.84,-401.36 769.84,-395.36 769.84,-395.36 769.84,-364.64 769.84,-364.64 769.84,-358.64 775.84,-352.64 781.84,-352.64 781.84,-352.64 1079.26,-352.64 1079.26,-352.64 1085.26,-352.64 1091.26,-358.64 1091.26,-364.64 1091.26,-364.64 1091.26,-395.36 1091.26,-395.36 1091.26,-401.36 1085.26,-407.36 1079.26,-407.36" />
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-383.75" font-family="Arial" font-size="15.00" fill="#152b36">Kubernetes API</text>
+<text xml:space="preserve" text-anchor="middle" x="930.55" y="-365.75" font-family="Arial" font-size="15.00" fill="#152b36">Deployments, Services, Secrets, PVC specs</text>
+</g>
+
+<g id="edge6" class="edge">
+<title>resources-&gt;server</title>
+<path fill="none" stroke="#64748b" d="M1076.54,-352.14C1081.51,-351.1 1086.43,-350.05 1091.26,-349 1166.39,-332.72 1252.14,-311.87 1309.58,-297.57" />
+<polygon fill="#64748b" stroke="#64748b" points="1309.99,-300.36 1317.08,-295.7 1308.64,-294.92 1309.99,-300.36" />
+<text xml:space="preserve" text-anchor="middle" x="1182.63" y="-345.23" font-family="Arial" font-size="11.00" fill="#475569">Resource definitions</text>
+</g>
+</g>
+</g><text x="40" y="564.0053908355795" font-family="Arial,sans-serif" font-size="15" fill="#475569">GKE Workload Identity grants GCS access · Pause app writes during backups · File system backup, no disk snapshots</text></svg>
