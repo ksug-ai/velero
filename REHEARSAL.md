@@ -27,6 +27,10 @@ The merged AI recovery demo was exercised on a real one-node GKE Standard cluste
 
 The first cluster creation attempt in us-central1-f failed with GCE_STOCKOUT. The failed cluster was deleted and creation succeeded in us-central1-c. Capacity varies; override `MY_ZONE` and keep that value in every terminal used for the demo.
 
+## Restore warnings reviewed
+
+The restore completed with zero errors and warning categories for missing optional `VolumeGroupSnapshotContent` v1beta2 discovery and an already regenerated `kube-root-ca.crt` ConfigMap. This demo uses file system backup, not group snapshots; Kubernetes generated the namespace CA ConfigMap. Both volume restores completed and the application state comparison passed. These warnings did not prevent the tested recovery.
+
 ## Reconnect to an existing deployment
 
 Set the project and zone to the values used when creating your cluster:
