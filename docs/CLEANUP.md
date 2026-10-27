@@ -10,8 +10,14 @@ Use the **same project, cluster, zone, region, bucket, and service-account setti
 
 ```bash
 export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
+printf '\n'
+
 export MY_ZONE=us-central1-c
+printf '\n'
+
 ./cleanup.sh                        # Read-only cloud inventory; writes cleanup-report.json
+printf '\n'
+
 ./cleanup.sh --apply                # Show scope, then require project/cluster confirmation
 ```
 
