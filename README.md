@@ -87,4 +87,4 @@ Backups of the database and document PVC are separate operations. Pause uploads 
 - [Velero backup hooks](https://velero.io/docs/main/backup-hooks/)
 - [GCP plugin setup and compatibility](https://github.com/velero-io/velero-plugin-for-gcp)
 
-The defaults pair Velero 1.18.x with GCP plugin 1.14.x according to the compatibility table. Rehearse against your chosen GKE version before presenting; local validation cannot establish cloud compatibility.
+The defaults pair Velero 1.18.x with GCP plugin 1.14.x according to the compatibility table. The full backup/delete/restore flow passed on GKE 1.36.4; see [the cloud rehearsal results](REHEARSAL.md). Rehearse against your chosen project and cluster before presenting.

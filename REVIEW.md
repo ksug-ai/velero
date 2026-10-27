@@ -18,9 +18,9 @@
 
 ## Remaining boundaries
 
-This is a disposable presentation lab. PostgreSQL live storage is ephemeral, credentials are demo-only, image tags are not digest-locked, and availability is limited to one node. No production hardening, point-in-time recovery, automated cross-cluster recovery, or cloud deployment has been validated as part of this cleanup. The hourly schedule and backup hook must be rehearsed on the actual target cluster before the event.
+This is a disposable presentation lab. PostgreSQL live storage is ephemeral, credentials are demo-only, image tags are not digest-locked, and availability is limited to one node. A real GKE backup/delete/restore rehearsal and a backup from the hourly schedule template passed; see [REHEARSAL.md](REHEARSAL.md). Production hardening, point-in-time recovery, and cross-cluster recovery remain outside the validated scope.
 
-The deployment scripts configure billed resources and IAM bindings. They were reviewed locally without provisioning cloud infrastructure. Existing resources with the configured names are assumed to be dedicated to this demo; choose fresh names if sharing a project.
+The deployment scripts configure billed resources and IAM bindings. They were reviewed locally and then exercised against a dedicated GKE demo cluster. Existing resources with the configured names are assumed to be dedicated to this demo; choose fresh names if sharing a project.
 
 ## AI application demo
 
