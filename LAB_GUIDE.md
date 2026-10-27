@@ -8,9 +8,13 @@ Follow the README quick start: `./setup.sh` deploys the whole demo, including th
 
 ```bash
 kubectl get nodes
+printf '\n'
 kubectl -n velero get pods
+printf '\n'
 ./velero.sh backup-location get
+printf '\n'
 kubectl -n velero-demo get pods,pvc
+printf '\n'
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
 
