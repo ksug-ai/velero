@@ -43,12 +43,7 @@ From this repository:
 export MY_PROJECT_ID=your-project-id
 # Optional: override MY_CLUSTER, MY_REGION, MY_ZONE, MY_BUCKET in your shell.
 # If changing the region, also choose a zone within that region.
-./createsa.sh
-./gke-deploy.sh
-./postgresql-deploy.sh
-./ai-app/build-and-push.sh
-# Copy the AI_APP_IMAGE=... ./ai-app-deploy.sh command printed by the build.
-./velero-deploy.sh
+./setup.sh
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
 
@@ -60,7 +55,11 @@ export MY_PROJECT_ID=your-project-id
 ./demo.sh verify
 ```
 
-The build script uses Cloud Build and Artifact Registry and incurs build/storage charges. Your build identity needs permission to push images, and the GKE node identity needs Artifact Registry Reader access to the repository. Reusing an image is supported: set `AI_APP_IMAGE` to an existing pushed image and run `./ai-app-deploy.sh`. No image is built or pushed automatically during a restore.
+`setup.sh` creates the configured cluster or reconnects to an existing running cluster in the same zone, deploys PostgreSQL, builds **and deploys** Aurora, and installs Velero. It stops on failure before printing success. You still need the prerequisite CLIs installed and valid cloud permissions/quota.
+
+For individual steps, run `./createsa.sh`, `./gke-deploy.sh` (new clusters only), `./postgresql-deploy.sh`, `./ai-app/build-and-push.sh`, and `./velero-deploy.sh` in that order. The build script now deploys automatically; there is no command to copy from its output. Use `./ai-app/build-and-push.sh --build-only` only when you intentionally want an image without a deployment.
+
+The build script uses Cloud Build and Artifact Registry and incurs build/storage charges. Your build identity needs permission to push images, and the GKE node identity needs Artifact Registry Reader access to the repository. Reusing an image is supported: set `AI_APP_IMAGE` to an existing pushed image before `./setup.sh` to skip the build, or run `./ai-app-deploy.sh` to deploy only that image. No image is built or pushed automatically during a restore.
 
 Use a globally unique bucket name dedicated to this demo. Keep the same environment settings across terminal sessions. `setenv.sh` contains defaults; every gcloud operation specifies the project. Kubernetes scripts check the expected context before making changes. Cluster creation is a one-time operation; if it already exists, reconnect with:
 
@@ -75,6 +74,7 @@ Continue with [the presenter runbook](LAB_GUIDE.md) for the deletion, restore, s
 
 | File | Purpose |
 | --- | --- |
+| `setup.sh` | Provision or reconnect, deploy PostgreSQL and Aurora, then install Velero |
 | `cleanup.sh` | Preview, remove, and verify all dedicated demo resources |
 | `setenv.sh` | Overridable demo defaults |
 | `createsa.sh` | Enable required Google Cloud APIs (legacy filename) |

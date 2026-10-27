@@ -4,7 +4,7 @@
 
 ## 1. Prepare before presenting
 
-Follow the README quick start. Allow time for cluster provisioning, image downloads, IAM propagation, and the first file system backup. Keep a second terminal available for observing resources.
+Follow the README quick start: `./setup.sh` deploys the whole demo, including the app Service. The standalone `./ai-app/build-and-push.sh` also builds and deploys automatically. Allow time for cluster provisioning, image downloads, IAM propagation, and the first file system backup. Keep a second terminal available for observing resources.
 
 ```bash
 kubectl get nodes

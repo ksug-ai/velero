@@ -9,12 +9,15 @@ A small document Q&A app for showing recovery of knowledge documents and convers
 From the repository root, first deploy PostgreSQL, then build and deploy the app:
 
 ```bash
-export MY_PROJECT_ID=your-project-id
+export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
 ./postgresql-deploy.sh
 ./ai-app/build-and-push.sh
-# Run the AI_APP_IMAGE=... ./ai-app-deploy.sh command printed by the build.
 kubectl -n velero-demo port-forward svc/ai-assistant 8080:8080
 ```
+
+The build command builds, pushes, and deploys automatically, waits for rollout, and checks that the `ai-assistant` Service exists. It checks the cluster context and PostgreSQL before starting a billed build. To provision the whole demo, including GKE and Velero, use `./setup.sh` from the repository root instead.
+
+For a build without deployment, use `./ai-app/build-and-push.sh --build-only`. Its output explicitly says that the app has not been deployed. To deploy a previously built image, use `AI_APP_IMAGE=your-image ./ai-app-deploy.sh`.
 
 Open http://localhost:8080 and upload `sample-docs/recovery-plan.md`. Ask "What is the recovery passphrase?". The default mode returns matching document paragraphs and explicitly labels them as excerpts, with no language model involved. File uploads accept UTF-8 `.txt` and `.md` files up to roughly 256 KiB including the multipart request overhead.
 
