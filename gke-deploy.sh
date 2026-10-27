@@ -1,39 +1,9 @@
-set -e
-
-echo '-------Creating a GKE Cluster only (typically in ~5 mins)'
-starttime=$(date +%s)
-. ./setenv.sh
-TEMP_PREFIX=$(whoami | sed -e 's/[_.]//g' | tr '[:upper:]' '[:lower:]')
-FIRST2=$(printf "%.2s" "$TEMP_PREFIX")
-LAST2=$(printf "%s" "$TEMP_PREFIX" | tail -c2 | head -c2)
-MY_PREFIX="$FIRST2$LAST2"
-GKE_K8S_VERSION=$(gcloud container get-server-config --region "${MY_REGION}" --format='table(channels.validVersions[])' --filter='channels.channel=RAPID' 2>/dev/null | grep -o "${K8S_VERSION}-gke\.[0-9]*" | sort -rV | head -n 1 | tr -d '\n\r')
-
-if [ -z "$GKE_K8S_VERSION" ]; then
-    echo "Error: No GKE version found for $K8S_VERSION in RAPID channel." >&2
-    exit 1
-fi
-
-echo "Using GKE version: $GKE_K8S_VERSION"
-echo "Cluster name: $MY_PREFIX-$MY_CLUSTER-$(date +%s)"
-
-gcloud container clusters create "$MY_PREFIX-$MY_CLUSTER-$(date +%s)" \
-  --zone "$MY_ZONE" \
-  --num-nodes 1 \
-  --machine-type "$MY_MACHINE_TYPE" \
-  --release-channel=rapid \
-  --cluster-version "$GKE_K8S_VERSION" \
-  --no-enable-basic-auth \
-  --addons=GcePersistentDiskCsiDriver,BackupRestore \
-  --enable-autoscaling --min-nodes 1 --max-nodes 3
-
-echo
-./postgresql-deploy.sh
-
-endtime=$(date +%s)
-duration=$(( $endtime - $starttime ))
-echo
-echo "-------Total time to build a GKE cluster with PostgreSQL is $(($duration / 60)) minutes $(($duration % 60)) seconds."
-echo
-echo "-------Created by Yongkang"
-echo "-------Email me if any suggestions or issues he@yongkang.cloud"
+#!/usr/bin/env bash
+source "$(dirname "$0")/scripts/common.sh"
+gcloud container clusters create "$MY_CLUSTER" --project "$MY_PROJECT_ID" \
+  --zone "$MY_ZONE" --num-nodes 1 --machine-type "$MY_MACHINE_TYPE" \
+  --release-channel regular --image-type COS_CONTAINERD \
+  --workload-pool "$MY_PROJECT_ID.svc.id.goog" \
+  --workload-metadata GKE_METADATA --addons GcePersistentDiskCsiDriver
+gcloud container clusters get-credentials "$MY_CLUSTER" --project "$MY_PROJECT_ID" --zone "$MY_ZONE"
+echo 'Cluster ready. Run ./postgresql-deploy.sh next.'

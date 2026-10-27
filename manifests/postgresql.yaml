@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: velero-demo
+---
+# Disposable demo credentials only.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres
+  namespace: velero-demo
+type: Opaque
+stringData:
+  POSTGRES_PASSWORD: demo-only-change-me
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-backup
+  namespace: velero-demo
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: velero-demo
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+      annotations:
+        backup.velero.io/backup-volumes: backup
+        pre.hook.backup.velero.io/container: postgres
+        pre.hook.backup.velero.io/command: '["/bin/sh", "-ec", "pg_dump -U postgres -d demo -Fc -f /backup/demo.dump.tmp; mv /backup/demo.dump.tmp /backup/demo.dump"]'
+        pre.hook.backup.velero.io/on-error: Fail
+        pre.hook.backup.velero.io/timeout: 120s
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17.6-bookworm
+          env:
+            - name: POSTGRES_DB
+              value: demo
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_PASSWORD
+          ports:
+            - containerPort: 5432
+          readinessProbe:
+            exec:
+              command: [sh, -ec, 'pg_isready -U postgres -d demo']
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: backup
+              mountPath: /backup
+      volumes:
+        # Live data is ephemeral; recover the logical dump from the backup PVC.
+        - name: data
+          emptyDir: {}
+        - name: backup
+          persistentVolumeClaim:
+            claimName: postgres-backup
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: velero-demo
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
