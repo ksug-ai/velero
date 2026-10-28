@@ -131,7 +131,7 @@ Use the automated teardown after the demo. It removes the cluster, labeled disks
 export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project id
 printf '\n'
 
-export MY_ZONE=us-central1-c  # Match the zone you actually deployed
+export MY_ZONE=us-central1-f  # Match the zone you actually deployed
 printf '\n'
 
 ./cleanup.sh
