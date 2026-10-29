@@ -4,6 +4,8 @@
 
 A presentation and hands-on demo of Velero on Google Kubernetes Engine (GKE), protecting a small document Q&A assistant backed by PostgreSQL and Google Cloud Storage (GCS) backups.
 
+> ### 📥 [Download the slides](https://canva.link/hiz1erxgxizwka0)
+
 Upload a knowledge document, ask a question, back up the application, delete its namespace, and restore the documents and conversation history. An hourly schedule demonstrates automation.
 
 The app is called **KSUG.AI Aurora AI**. Its default rehearsal mode returns matching document excerpts, with no model or API key required. Optionally connect an Ollama model for generated answers. The UI clearly identifies the active mode.
@@ -58,8 +60,8 @@ export MY_PROJECT_ID=automatic-hawk-379007 # Replace this with your own project 
 printf '\n'
 
 ./demo.sh backup demo-01 &&
-  printf '\n' &&
-  ./demo.sh verify demo-01
+printf '\n' &&
+./demo.sh verify demo-01
 ```
 
 `setup.sh` creates the configured cluster or reconnects to an existing running cluster in the same zone, deploys PostgreSQL, builds **and deploys** Aurora, and installs Velero. It stops on failure before printing success. You still need the other prerequisite CLIs installed and valid cloud permissions/quota.
